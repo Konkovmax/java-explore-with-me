@@ -80,8 +80,8 @@ public class AdminController {
     public List<EventFullDto> getAllEvents(@RequestParam(value = "users", required = false) Integer[] users,
                                            @RequestParam(value = "states", required = false) String[] states,
                                            @RequestParam(value = "categories", required = false) Integer[] categories,
-                                           @RequestParam(value = "rangestart", required = false) String rangeStart,
-                                           @RequestParam(value = "rangeend", required = false) String rangeEnd,
+                                           @RequestParam(value = "rangeStart", required = false) String rangeStart,
+                                           @RequestParam(value = "rangeEnd", required = false) String rangeEnd,
                                            @RequestParam(value = "from", defaultValue = "0", required = false) int from,
                                            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         return eventService.getAllParam(users, states, categories, rangeStart, rangeEnd,
