@@ -1,4 +1,4 @@
-package ru.practicum.ewmservice.compilations;
+package ru.practicum.ewmservice.compilation;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
