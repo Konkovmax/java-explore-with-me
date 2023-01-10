@@ -1,4 +1,4 @@
-package ru.practicum.ewmservice.compilations;
+package ru.practicum.ewmservice.compilation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 
-public class CompilationDto {
+public class NewCompilationDto {
     private int id;
     @NotEmpty
     private String title;

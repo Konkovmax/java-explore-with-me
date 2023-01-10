@@ -1,4 +1,4 @@
-package ru.practicum.ewmservice.compilations;
+package ru.practicum.ewmservice.compilation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
