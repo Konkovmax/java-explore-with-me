@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.compilation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.event.Event;
 import ru.practicum.ewmservice.event.EventRepository;
 import ru.practicum.ewmservice.exception.NotFoundException;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class CompilationService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
@@ -24,6 +26,7 @@ public class CompilationService {
 
     public Compilation create(CompilationDto compilationDto) {
         Set<Event> events = eventRepository.findByIdIn(compilationDto.getEvents());
+
         return compilationRepository.save(
                 CompilationMapper.toCompilation(compilationDto, events));
     }
@@ -41,6 +44,7 @@ public class CompilationService {
         Set<Event> events = comp.getEvents();
         events.add(event);
         comp.setEvents(events);
+
         return compilationRepository.save(comp);
     }
 
@@ -52,6 +56,7 @@ public class CompilationService {
         Set<Event> events = comp.getEvents();
         events.remove(event);
         comp.setEvents(events);
+
         return compilationRepository.save(comp);
     }
 
@@ -60,6 +65,7 @@ public class CompilationService {
         Compilation comp = compilationRepository.findById(compId).orElseThrow(
                 () -> new NotFoundException(String.format("Compilation with id: %s not found", compId)));
         comp.setPinned(true);
+
         return compilationRepository.save(comp);
     }
 
@@ -67,6 +73,7 @@ public class CompilationService {
         Compilation comp = compilationRepository.findById(compId).orElseThrow(
                 () -> new NotFoundException(String.format("Compilation with id: %s not found", compId)));
         comp.setPinned(false);
+
         return compilationRepository.save(comp);
     }
 

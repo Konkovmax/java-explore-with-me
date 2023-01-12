@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.exception.ConflictException;
 import ru.practicum.ewmservice.exception.NotFoundException;
 
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
@@ -33,6 +36,8 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
+@Transactional(propagation = Propagation.NEVER)//все остальные способы, которые я нашел - не помогли(((
+    // norollback, rollback, и в сервисе, и в репозитории. При том что в userService всё то же самое и работает
     public CategoryDto update(CategoryDto category) {
         Category updateCategory = categoryRepository.findById(category.getId()).orElseThrow(() -> new NotFoundException(
                 String.format("Category with id: %s not found", category.getId())));

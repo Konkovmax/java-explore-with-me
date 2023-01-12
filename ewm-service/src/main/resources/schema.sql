@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS events
     participant_limit  bigint,
     published_on       timestamp WITHOUT TIME ZONE,
     request_moderation boolean,
-    state              varchar(255),
+    state              varchar(30),
     CONSTRAINT pk_comment PRIMARY KEY (id)
 );
 
@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS compilation_event
 (
     compilation_id int NOT NULL,
     event_id       int NOT NULL
---    CONSTRAINT PK_compilation_event PRIMARY KEY (compilation_id, event_id)
 );
 
 ALTER TABLE events
@@ -79,11 +78,6 @@ ALTER TABLE requests
 ALTER TABLE requests
     ADD CONSTRAINT fk_request_event FOREIGN KEY (event_id)
         REFERENCES events (id) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- ALTER TABLE compilation_event
---     ADD CONSTRAINT fk_compilation FOREIGN KEY (compilation_id)
---         REFERENCES compilations (id);
--- ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE compilation_event
     ADD CONSTRAINT fk_event_compilation FOREIGN KEY (event_id)

@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.event;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.category.Category;
 import ru.practicum.ewmservice.category.CategoryRepository;
 import ru.practicum.ewmservice.exception.NotFoundException;
@@ -11,19 +12,18 @@ import ru.practicum.ewmservice.user.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final EventClient eventClient;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
     public EventService(EventRepository eventRepository, CategoryRepository categoryRepository,
@@ -40,6 +40,7 @@ public class EventService {
                 "User with id: %s not found", userId)));
         Category category = categoryRepository.findById(event.getCategory()).orElseThrow(() -> new NotFoundException(
                 String.format("Category with id: %s not found", event.getCategory())));
+
         return EventMapper.toEventFullDto(eventRepository.save(EventMapper.toEvent(event, user, category)));
     }
 
@@ -60,14 +61,13 @@ public class EventService {
     }
 
     public EventFullDto updateAdmin(int eventId, NewEventDto updateEvent) {
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(
-                String.format("Event with id: %s not found", eventId)));
         Category category = categoryRepository.findById(updateEvent.getCategory()).orElseThrow(
                 () -> new NotFoundException(
                         String.format("Category with id: %s not found", updateEvent.getCategory())));
         EventPartialUpdateMapper mapper = new EventPartialUpdateMapperImpl();
-        event = mapper.partialUpdate(updateEvent);
+        Event event = mapper.partialUpdate(updateEvent);
         event.setCategory(category);
+
         return EventMapper.toEventFullDto(eventRepository.save(event));
     }
 
@@ -85,6 +85,7 @@ public class EventService {
         if (event.getState() == State.PENDING) {
             event.setState(State.CANCELED);
         }
+
         return EventMapper.toEventFullDto(eventRepository.save(event));
     }
 
@@ -94,6 +95,7 @@ public class EventService {
         if (event.getState() == State.PENDING) {
             event.setState(State.CANCELED);
         }
+
         return EventMapper.toEventFullDto(eventRepository.save(event));
     }
 
@@ -105,6 +107,7 @@ public class EventService {
                     .map(i -> State.valueOf(i))
                     .toArray(State[]::new);
         }
+
         return eventRepository.findEventByParam(users, enumStates, categories,
                         pageable).stream()
                 .map(EventMapper::toEventFullDto)
@@ -116,6 +119,7 @@ public class EventService {
                                      Pageable pageable, HttpServletRequest request) {
         eventClient.createHit(new HitDto("ewm-main-service", request.getRequestURI(), request.getRemoteAddr(),
                 LocalDateTime.now()));
+
         return eventRepository.searchEvent(text, categories, paid, pageable).stream()
                 .map(EventMapper::toEventFullDto)
                 .collect(Collectors.toList());
@@ -130,6 +134,7 @@ public class EventService {
     public EventFullDto get(int eventId, HttpServletRequest request) {
         eventClient.createHit(new HitDto("ewm-main-service", request.getRequestURI(), request.getRemoteAddr(),
                 LocalDateTime.now()));
+
         return EventMapper.toEventFullDto(eventRepository.findById(eventId).orElseThrow(
                 () -> new NotFoundException(String.format("Event with id: %s not found", eventId))));
     }

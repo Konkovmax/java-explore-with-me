@@ -2,6 +2,7 @@ package ru.practicum.ewmservice.request;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.event.Event;
 import ru.practicum.ewmservice.event.EventRepository;
 import ru.practicum.ewmservice.exception.NotFoundException;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class RequestService {
     private final RequestRepository requestRepository;
     private final EventRepository eventRepository;
@@ -33,6 +35,7 @@ public class RequestService {
         request.setEvent(eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(String.format(
                 "Event with id: %s not found", eventId))));
         request.setStatus("PENDING");
+
         return RequestMapper.toRequestDto(requestRepository.save(request));
     }
 
@@ -44,6 +47,7 @@ public class RequestService {
 
     public List<RequestDto> getByUserEvent(int userId, int eventId) {
         List<Event> userEvents = eventRepository.getEventByInitiator_Id(userId);
+
         return requestRepository.findByEventIn(userEvents).stream()
                 .map(RequestMapper::toRequestDto)
                 .collect(Collectors.toList());
@@ -53,6 +57,7 @@ public class RequestService {
         Request request = requestRepository.findById(requestId).orElseThrow(() -> new NotFoundException(String.format(
                 "Event with id: %s not found", requestId)));
         request.setStatus("CANCELED");
+
         return RequestMapper.toRequestDto(requestRepository.save(request));
     }
 
@@ -60,6 +65,7 @@ public class RequestService {
         Request request = requestRepository.findById(requestId).orElseThrow(() -> new NotFoundException(String.format(
                 "Event with id: %s not found", requestId)));
         request.setStatus("REJECTED");
+
         return RequestMapper.toRequestDto(requestRepository.save(request));
     }
 
@@ -67,6 +73,7 @@ public class RequestService {
         Request request = requestRepository.findById(requestId).orElseThrow(() -> new NotFoundException(String.format(
                 "Event with id: %s not found", requestId)));
         request.setStatus("CONFIRMED");
+
         return RequestMapper.toRequestDto(requestRepository.save(request));
     }
 

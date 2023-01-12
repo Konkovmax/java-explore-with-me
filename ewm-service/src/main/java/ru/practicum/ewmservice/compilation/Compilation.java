@@ -18,9 +18,11 @@ public class Compilation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int id;
+
     @Column(nullable = false)
     private String title;
     private boolean pinned;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

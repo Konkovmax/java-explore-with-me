@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.exception.ConflictException;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
@@ -21,7 +23,6 @@ public class UserService {
         try {
             return UserMapper.toUserDto(userRepository.save(UserMapper.toUser(user)));
         } catch (DataIntegrityViolationException e) {
-            log.error("Duplicated Email");
             throw new ConflictException("Email can't duplicated");
         }
     }
