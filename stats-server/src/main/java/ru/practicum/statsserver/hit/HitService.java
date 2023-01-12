@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,7 +25,7 @@ public class HitService {
 
     public List<Views> views(String start, String end, String[] uris, boolean unique) {
         Views view = new Views();
-        view.setUri(uris.toString());
+        view.setUri(Arrays.toString(uris));
         view.setApp("main");
         List<Views> views = new ArrayList<>();
         if (unique) {
