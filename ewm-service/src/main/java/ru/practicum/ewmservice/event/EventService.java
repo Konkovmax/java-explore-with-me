@@ -49,7 +49,7 @@ public class EventService {
                 String.format("Event with id: %s not found", updateEvent.getEventId())));
         Category category = categoryRepository.findById(updateEvent.getCategory()).orElseThrow(
                 () -> new NotFoundException(String.format("Category with id: %s not found", updateEvent.getCategory())));
-        if ((event.getState() != State.PUBLISHED) && (event.getEventDate().minusHours(2).isAfter(LocalDateTime.now()))){
+        if ((event.getState() != State.PUBLISHED) && (event.getEventDate().minusHours(2).isAfter(LocalDateTime.now()))) {
             if (event.getState() == State.CANCELED) {
                 event.setState(State.PENDING);
             }

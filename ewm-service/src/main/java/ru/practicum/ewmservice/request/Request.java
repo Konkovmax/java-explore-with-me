@@ -19,7 +19,7 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int id;
-    private LocalDateTime CreatedOn;
+    private LocalDateTime createdOn;
     @ManyToOne
     @JoinColumn(name = "requester_id")
     private User requester;

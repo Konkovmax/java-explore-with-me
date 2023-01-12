@@ -16,10 +16,10 @@ public class EventFullDto {
     private String annotation;
     private String description;
     private Category category;
-    private LocalDateTime CreatedOn;
+    private LocalDateTime createdOn;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
-    private User Initiator;
+    private User initiator;
     private Location location;
     private boolean paid;
     private int participantLimit;
