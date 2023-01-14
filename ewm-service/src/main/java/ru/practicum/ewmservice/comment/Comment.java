@@ -28,5 +28,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
+
+    @Column(name = "inform")
     private String text;
 }
