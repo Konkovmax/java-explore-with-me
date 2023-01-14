@@ -27,7 +27,7 @@ public class CommentController {
         commentService.delete(commentId);
     }
 
-    @PutMapping("/{userid}/events/{eventid}")
+    @PatchMapping("/{userid}")
     public CommentDto update(@PathVariable("userid") int userId, @RequestBody CommentNewDto comment) {
         return commentService.update(comment, userId, false);
     }
