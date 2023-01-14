@@ -196,6 +196,71 @@
 					"response": []
 				},
 				{
+					"name": "Comment update by admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});",
+									"pm.test(\"Test update item\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.text, '\"text\" field').to.eql('Comment update');",
+									"    // pm.expect(jsonData.description, '\"description\" field').to.eql('Аккумуляторная дрель');",
+									"    // pm.expect(jsonData.available, '\"available\" field').to.false;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "X-Sharer-User-Id",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"text\": \"Comment update\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/comments/:userid",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"comments",
+								":userid"
+							],
+							"variable": [
+								{
+									"key": "userid",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Comment delete",
 					"event": [
 						{

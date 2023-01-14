@@ -124,7 +124,7 @@ public class AdminController {
         compilationService.delete(compId);
     }
 
-    @PutMapping("/{userid}/events/{eventid}")
+    @PatchMapping("comments/{userid}")
     public CommentDto update(@PathVariable("userid") int userId, @RequestBody CommentNewDto comment) {
         return commentService.update(comment, userId, true);
     }

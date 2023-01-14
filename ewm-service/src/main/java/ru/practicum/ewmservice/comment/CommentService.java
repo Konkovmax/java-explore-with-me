@@ -1,5 +1,6 @@
 package ru.practicum.ewmservice.comment;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,18 +16,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional
 public class CommentService {
     private final CommentRepository commentRepository;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-
-    public CommentService(CommentRepository commentRepository,
-                          EventRepository eventRepository, UserRepository userRepository) {
-        this.eventRepository = eventRepository;
-        this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
-    }
 
     public CommentDto create(CommentNewDto commentNew, int userId, int eventId) {
         Comment comment = new Comment();
