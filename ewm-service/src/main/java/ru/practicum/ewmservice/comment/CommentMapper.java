@@ -7,7 +7,7 @@ public class CommentMapper {
                 comment.getCreatedOn(),
                 comment.getAuthor().getId(),
                 comment.getEvent().getId(),
-                comment.getText()
+                comment.getInform()
         );
     }
 

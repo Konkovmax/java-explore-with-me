@@ -29,5 +29,5 @@ public class Comment {
     private Event event;
 
     @Column(name = "inform")
-    private String text;
+    private String inform;
 }

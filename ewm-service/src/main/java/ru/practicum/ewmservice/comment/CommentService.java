@@ -30,7 +30,7 @@ public class CommentService {
                 "User with id: %s not found", userId))));
         comment.setEvent(eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(String.format(
                 "Event with id: %s not found", eventId))));
-        comment.setText(commentNew.getText());
+        comment.setInform(commentNew.getText());
 
         return CommentMapper.toCommentDto(commentRepository.save(comment));
     }
@@ -44,7 +44,7 @@ public class CommentService {
                 throw new BadRequestException(String.format("User with id: %s didn't leave this comment", userId));
             }
         }
-        comment.setText(commentNew.getText());
+        comment.setInform(commentNew.getText());
 
         return CommentMapper.toCommentDto(commentRepository.save(comment));
     }
