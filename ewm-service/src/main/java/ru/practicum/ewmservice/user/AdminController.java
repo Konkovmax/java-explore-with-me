@@ -4,6 +4,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmservice.category.CategoryDto;
 import ru.practicum.ewmservice.category.CategoryService;
+import ru.practicum.ewmservice.comment.CommentDto;
+import ru.practicum.ewmservice.comment.CommentNewDto;
+import ru.practicum.ewmservice.comment.CommentService;
 import ru.practicum.ewmservice.compilation.Compilation;
 import ru.practicum.ewmservice.compilation.CompilationDto;
 import ru.practicum.ewmservice.compilation.CompilationService;
@@ -22,13 +25,16 @@ public class AdminController {
     private final EventService eventService;
     private final CategoryService categoryService;
     private final CompilationService compilationService;
+    private final CommentService commentService;
 
     public AdminController(UserService userService, EventService eventService,
-                           CategoryService categoryService, CompilationService compilationService) {
+                           CategoryService categoryService, CompilationService compilationService,
+                           CommentService commentService) {
         this.userService = userService;
         this.categoryService = categoryService;
         this.eventService = eventService;
         this.compilationService = compilationService;
+        this.commentService = commentService;
     }
 
     @PostMapping("/users")
@@ -118,4 +124,8 @@ public class AdminController {
         compilationService.delete(compId);
     }
 
+    @PatchMapping("comments/{userid}")
+    public CommentDto update(@PathVariable("userid") int userId, @RequestBody CommentNewDto comment) {
+        return commentService.update(comment, userId, true);
+    }
 }
