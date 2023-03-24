@@ -1,4 +1,6 @@
-# java-explore-with-me
-Template repository for ExploreWithMe project.
+Recommendation service for films (as part of a team of 5 members, I played the role of Team Lead)
 
-https://github.com/Konkovmax/java-explore-with-me/pulls
+Technologies: Java, SQL, H2, Lombok, Git, Spring Boot, Postman, JdbcTemplate
+
+Functionality: movie search, data validation, likes, recommendations, friend lists, reviews, error logging.
+
