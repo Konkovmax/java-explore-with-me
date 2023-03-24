@@ -1,6 +1,7 @@
- ##### Recommendation service for films (as part of a team of 5 members, I played the role of Team Lead)
+##### Service for sharing personal items
 
-**Technologies:** Java, SQL, H2, Lombok, Git, Spring Boot, Postman, JdbcTemplate
+**Technologies:** Java, Docker, Hibernate, PostgreSQL, Lombok, Git, Spring Boot, Mockito
 
-**Functionality:** movie search, data validation, likes, recommendations, friend lists, reviews, error logging.
+**Functionality:** 3 services implemented - a gateway, a database and a business logic server for booking things, customer reviews, rental requests.
+
 
